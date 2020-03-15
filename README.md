@@ -7,3 +7,4 @@
 2. [Миро](https://miro.com/app/board/o9J_kunTaCY=/)
 # Документация
 1. [Документ по ролям](https://github.com/Phantom1000/TP_project/blob/master/documents/Roles.docx)
+2. [Техническое задание](https://github.com/Phantom1000/TP_project/blob/master/documents/TZ.docx)
