@@ -1,0 +1,13 @@
+<div th:fragment="header">
+    <nav class="navbar navbar-dark bg-primary">
+        <form th:action="@{/logout}" class="form-inline" method="post">
+            <button class="btn btn-light" type="submit">Выйти</button>
+        </form>
+
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{'/profile/' + ${id}}"><div class="_profile"></div></a>
+            </li>
+        </ul>
+    </nav>
+</div>
