@@ -1,3 +1,7 @@
+html {
+    font-size: 1.2rem;
+}
+
 ._form {
     margin-top: 20%;
     margin-left: 20%;
@@ -8,4 +12,23 @@
     height: 50px;
     border-radius: 100%;
     background-color: white;
+}
+
+.changeLabel {
+    margin-bottom: 10%;
+    border-bottom: 2px solid #2586f5;
+    width: 12%;
+}
+
+.big {
+    transform:scale(1.3);
+}
+
+.wide {
+    width: 20%;
+}
+
+.testLabel {
+    border-bottom: 2px solid #2586f5;
+    width: 36%;
 }

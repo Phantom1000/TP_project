@@ -1,21 +1,38 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+  xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link href="/static/css/style.css" rel="stylesheet">
-    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
-    <title>Выбор теста</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <link href="/static/css/style.css" rel="stylesheet" />
+  <link href="/static/css/bootstrap.min.css" rel="stylesheet" />
+  <title>Выбор теста</title>
 </head>
+
 <body>
-<div th:replace="includes/header :: header"></div>
-<div class="container">
-    <div class="row text-center col-sm-2">
-        Выберите тест
+  <div th:replace="includes/header :: header"></div>
+  <div class="container mt-5">
+    <div class="offset-5 row text-center changeLabel">
+      Выберите тест
     </div>
-</div>
+    <form th:action="@{/test}" method="POST">
+
+      <div th:each="el : ${positions}" class="offset-2 form-check mt-4">
+        <input class="form-check-input big" type="radio" name="position" th:value="${el}" id="positionCheck">
+        <label class="form-check-label ml-3" for="positionCheck"
+          th:text="'Тестирование на вакансию ' + ${el} + ' Developer'" />
+      </div>
+      <div class="mt-5 offset-2">
+        <button type="submit" class="btn btn-primary mb-2 wide">Пройти</button>
+      </div>
+
+    </form>
+
+
+  </div>
 </body>
+
 </html>
