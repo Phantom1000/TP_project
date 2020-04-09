@@ -15,7 +15,7 @@ public class ProfileController {
     public String userEditForm(@AuthenticationPrincipal User currentUser, @PathVariable(name = "id") User user, Model model) {
         if (currentUser.equals(user)) {
             model.addAttribute("user",
-                    String.format("%s %s %s", user.getSurname(), user.getLastname(), user.getPatronymic()));
+                    String.format("%s %s %s", user.getSurname(), user.getFirstname(), user.getPatronymic()));
 
             return "profile";
         }

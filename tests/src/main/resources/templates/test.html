@@ -17,14 +17,19 @@
     <div class="container mt-5">
         <div class="offset-5 row text-center testLabel mb-4"
             th:text="'Тестирование на вакансию ' + ${position} + ' Developer'" />
-        <div th:each="el, status : ${test.questions}" class="offset-2 form-group mt-3">
-            <div th:text="${el.text}" class="font-weight-bold" />
-            <div th:each="ans : ${el.answers}" class="form-check mt-2">
-                
-                <input class="form-check-input big" type="radio" th:name="${el}" th:value="${ans}" />
-                <label class="form-check-label" th:text="${ans.text}" />
+        <form method="POST" th:action="@{/record}">
+            <div th:each="el, status : ${test.questions}" class="offset-2 form-group mt-3">
+                <div th:text="${el.text}" class="font-weight-bold" />
+                <div th:each="ans : ${el.answers}" class="form-check mt-2">
+
+                    <input class="form-check-input big" type="radio" th:name="${el.id}" th:value="${ans.id}" />
+                    <label class="form-check-label" th:text="${ans.text}" />
+                </div>
             </div>
-    </div>
+            <div class="mt-5 text-center">
+                <button type="submit" class="btn btn-primary mb-2">Завершить тестирование</button>
+            </div>
+        </form>
     </div>
 
 

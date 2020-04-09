@@ -25,7 +25,7 @@ create table usr (
     id int8 not null,
     username varchar(255) not null,
     surname varchar(255) not null,
-    lastname varchar(255) not null,
+    firstname varchar(255) not null,
     patronymic varchar(255) not null,
     password varchar(255) not null,
     primary key (id)

@@ -1,11 +1,14 @@
 package com.phantom.tests.models;
 
+import org.hibernate.validator.constraints.Length;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name="usr")
@@ -20,13 +23,17 @@ public class User implements UserDetails {
     private Long id;
     private String username;
     @NotBlank(message = "Заполните пароль")
+    @Length(min = 5, message = "Длина пароля должна быть не менее 5 символов")
     private String password;
     @NotBlank(message = "Заполните фамилию")
     private String surname;
     @NotBlank(message = "Заполните имя")
-    private String lastname;
+    private String firstname;
     @NotBlank(message = "Заполните отчество")
     private String patronymic;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
+    private List<Result> results;
 
 
     @Override
@@ -41,7 +48,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return surname + lastname + patronymic;
+        return surname + firstname + patronymic;
     }
 
     @Override
@@ -78,7 +85,7 @@ public class User implements UserDetails {
     }
 
     public void setUsername() {
-        this.username = surname + lastname + patronymic;
+        this.username = surname + firstname + patronymic;
     }
 
     public String getSurname() {
@@ -89,12 +96,12 @@ public class User implements UserDetails {
         this.surname = surname;
     }
 
-    public String getLastname() {
-        return lastname;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 
     public String getPatronymic() {
@@ -103,6 +110,14 @@ public class User implements UserDetails {
 
     public void setPatronymic(String patronymic) {
         this.patronymic = patronymic;
+    }
+
+    public List<Result> getResults() {
+        return results;
+    }
+
+    public void setResults(List<Result> results) {
+        this.results = results;
     }
 
     @Override
@@ -129,6 +144,5 @@ public class User implements UserDetails {
             return false;
         return true;
     }
-
     
 }

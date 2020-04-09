@@ -1,5 +1,7 @@
 package com.phantom.tests.models;
 
+import java.util.Set;
+
 import javax.persistence.*;
 
 @Entity
@@ -13,7 +15,12 @@ public class Answer {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "question_id")
-    private Question question;
+	private Question question;
+	
+	@ManyToMany
+	@JoinTable(name = "answer_result", joinColumns = { @JoinColumn(name = "answer_id") }, inverseJoinColumns = {
+			@JoinColumn(name = "result_id") })
+	private Set<Answer> results;
 
 	public Long getId() {
 		return id;
@@ -47,4 +54,13 @@ public class Answer {
 		this.correct = correct;
 	}
 
+	public Set<Answer> getResults() {
+		return results;
+	}
+
+	public void setResults(Set<Answer> results) {
+		this.results = results;
+	}
+
+	
 }

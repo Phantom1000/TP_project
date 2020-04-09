@@ -27,7 +27,7 @@ public class FioAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     private UsernamePasswordAuthenticationToken getAuthRequest(HttpServletRequest request) {
         String surname = request.getParameter("surname");
-        String lastname = request.getParameter("lastname");
+        String firstname = request.getParameter("firstname");
         String patronymic = request.getParameter("patronymic");
         String password = obtainPassword(request);
 
@@ -35,8 +35,8 @@ public class FioAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             surname = "";
         }
 
-        if (lastname == null) {
-            lastname = "";
+        if (firstname == null) {
+            firstname = "";
         }
 
         if (patronymic == null) {
@@ -47,7 +47,7 @@ public class FioAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             password = "";
         }
 
-        String fio = surname + lastname + patronymic;
+        String fio = surname + firstname + patronymic;
         return new UsernamePasswordAuthenticationToken(fio, password);
     }
 
