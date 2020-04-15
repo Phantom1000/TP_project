@@ -2,21 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
     xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport"
-        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link href="/static/css/style.css" rel="stylesheet" />
-    <link href="/static/css/bootstrap.min.css" rel="stylesheet" />
-    <title>Тест</title>
-</head>
+<head th:insert="includes/head :: header(title='Результат')" />
 
 <body>
-    <div th:replace="includes/header :: header"></div>
+    <div th:replace="includes/navbar :: navbar"></div>
     <div class="container result">
         <div class="row justify-content-center">
-            <div class="col-sm-3 text-center">
+            <div class="col-sm-3 text-center size2">
                 Ваш результат:
             </div>
         </div>
@@ -24,13 +16,13 @@
             <div class="col-sm-3 text-center result-rating" th:text="${rating} + '%'" />
         </div>
         <div class="row justify-content-center">
-            <div class="col-sm-4">
-                Вы <span th:if="${rating < 80}">не</span> прошли первый этап тестирования
+            <div class="col-sm-4 text-center size2">
+                Вы <th:block th:if="${rating < 80}">не</th:block> прошли первый этап тестирования
             </div>
         </div>
 
         <div class="mt-5 text-center">
-            <a href="#" class="btn btn-primary mb-2 result-button">Анализ тестирования</a>
+            <a th:href="@{/analysis/{id}(id=${result})}" class="btn btn-primary mb-2 result-button">Анализ тестирования</a>
         </div>
     </div>
 

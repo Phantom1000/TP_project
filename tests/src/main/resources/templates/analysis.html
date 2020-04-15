@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+    xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head th:insert="includes/head :: header(title='Личный кабинет')" />
+
+<body>
+    <div th:replace="includes/navbar :: navbar" />
+    <div class="container mt-5">
+        <div class="offset-5 row text-center mb-4 size2">Анализ тестирования:</div>
+        <div th:each="el, status : ${test.questions}" class="offset-2 form-group mt-3">
+            <div th:text="${el.text}" class="size1" th:classappend="${answers.get(status.index).getCorrect()}? text-success : text-danger" />
+            <ul class="list-group mt-2">
+                <li th:each="ans : ${el.answers}"
+                    th:with="color=(${answers.get(status.index).equals(ans)}? text-primary : '')"
+                    class="list-group-item"
+                    th:classappend="${ans.getCorrect() && !answers.get(status.index).equals(ans)}? text-success : ${color}"
+                    th:text="${ans.text}" />
+            </ul>
+        </div>
+        <div class="mt-5 text-center">
+            <a th:href="@{/profile/{id}(id=${id})}" class="btn btn-primary mb-2 result-button">Завершить обзор</a>
+        </div>
+    </div>
+</body>
+
+</html>

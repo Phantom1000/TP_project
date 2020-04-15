@@ -1,14 +1,14 @@
 package com.phantom.tests.services;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.Set;
 
 import com.phantom.tests.models.Result;
 import com.phantom.tests.models.Answer;
 import com.phantom.tests.models.Position;
+import com.phantom.tests.models.Question;
 import com.phantom.tests.models.Test;
 import com.phantom.tests.models.User;
 import com.phantom.tests.repos.AnswerRepo;
@@ -22,17 +22,29 @@ public class TestService {
     private final TestRepo testRepo;
     private final AnswerRepo answerRepo;
     private final ResultRepo resultRepo;
-    
+
+    public Test getTest(Long id) {
+        return testRepo.findById(id).orElseThrow();
+    }
+
+    public Test getTestByResult(Result result) {
+        Answer answer = result.getAnswers().get(0);
+        Question question = answer.getQuestion();
+        return question.getTest();
+    }
+
     public Test getRandomTestByPosition(Position position) {
         Random rnd = new Random();
         List<Test> tests = testRepo.findByPosition(position);
         Test test = tests.get(rnd.nextInt(tests.size()));
+        //Collections.shuffle(test.getQuestions());
+        //test.getQuestions().stream().forEach(a -> Collections.shuffle(a.getAnswers()));
         return test;
     }
 
     public Result getResult(Map<String, String> form, User user) {
         form.remove("_csrf");
-        Set<Answer> answers = new HashSet<>();
+        List<Answer> answers = new ArrayList<>();
         for(Map.Entry<String, String> item : form.entrySet()) {
             answers.add(answerRepo.findById(Long.parseLong(item.getValue())).orElseThrow());
         }

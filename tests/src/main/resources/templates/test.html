@@ -2,23 +2,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
     xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport"
-        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link href="/static/css/style.css" rel="stylesheet" />
-    <link href="/static/css/bootstrap.min.css" rel="stylesheet" />
-    <title>Тест</title>
-</head>
+<head th:insert="includes/head :: header(title='Тест')" />
 
 <body>
-    <div th:replace="includes/header :: header"></div>
+    <div th:replace="includes/navbar :: navbar"></div>
     <div class="container mt-5">
-        <div class="offset-5 row text-center testLabel mb-4"
+        <div class="offset-5 row text-center testLabel size2 mb-4"
             th:text="'Тестирование на вакансию ' + ${position} + ' Developer'" />
         <form method="POST" th:action="@{/record}">
-            <div th:each="el, status : ${test.questions}" class="offset-2 form-group mt-3">
+            <div th:each="el, status : ${test.questions}" class="offset-2 form-group size1 mt-3">
                 <div th:text="${el.text}" class="font-weight-bold" />
                 <div th:each="ans : ${el.answers}" class="form-check mt-2">
 

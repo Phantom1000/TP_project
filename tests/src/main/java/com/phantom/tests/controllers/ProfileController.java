@@ -16,7 +16,8 @@ public class ProfileController {
         if (currentUser.equals(user)) {
             model.addAttribute("user",
                     String.format("%s %s %s", user.getSurname(), user.getFirstname(), user.getPatronymic()));
-
+            model.addAttribute("id", user.getId());
+            model.addAttribute("results", user.getResults());
             return "profile";
         }
         return "redirect:/";

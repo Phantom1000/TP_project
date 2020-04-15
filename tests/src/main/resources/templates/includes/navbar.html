@@ -1,4 +1,4 @@
-<div th:fragment="header">
+<th:block th:fragment="navbar">
     <nav class="navbar navbar-dark bg-primary">
         <form th:action="@{/logout}" class="form-inline" method="post">
             <button class="btn btn-light" type="submit">Выйти</button>
@@ -10,4 +10,4 @@
             </li>
         </ul>
     </nav>
-</div>
+</th:block>

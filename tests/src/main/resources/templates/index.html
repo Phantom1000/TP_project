@@ -2,27 +2,19 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
   xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport"
-    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
-  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <link href="/static/css/style.css" rel="stylesheet" />
-  <link href="/static/css/bootstrap.min.css" rel="stylesheet" />
-  <title>Выбор теста</title>
-</head>
+<head th:insert="includes/head :: header(title='Выбор теста')" />
 
 <body>
-  <div th:replace="includes/header :: header"></div>
+  <div th:replace="includes/navbar :: navbar" />
   <div class="container mt-5">
-    <div class="offset-5 row text-center changeLabel">
+    <div class="offset-5 row text-center changeLabel size2">
       Выберите тест
     </div>
     <form th:action="@{/test}" method="POST">
 
       <div th:each="el : ${positions}" class="offset-2 form-check mt-4">
         <input class="form-check-input big" type="radio" name="position" th:value="${el}" id="positionCheck">
-        <label class="form-check-label ml-3" for="positionCheck"
+        <label class="form-check-label ml-3 size1" for="positionCheck"
           th:text="'Тестирование на вакансию ' + ${el} + ' Developer'" />
       </div>
       <div class="mt-5 offset-2">
@@ -34,12 +26,7 @@
   <div id="app">
     <hello-component></hello-component>
   </div>
-  <script src="/static/js/lib/bootstrap.min.js"></script>
-  <script src="/static/js/lib/jquery.min.js"></script>
-  <script src="/static/js/lib/popper.min.js"></script>
-  <script src="/static/js/lib/vue.min.js"></script>
-  <script src="/static/js/hello-component.js"></script>
-  <script src="/static/js/hello.js"></script>
+  <div th:replace="includes/scripts :: scripts" />
 </body>
 
 </html>

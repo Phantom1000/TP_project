@@ -1,18 +1,39 @@
 <!DOCTYPE HTML>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link href="/static/css/style.css" rel="stylesheet">
-    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
-    <title>Личный кабинет</title>
-</head>
+
+<head th:insert="includes/head :: header(title='Личный кабинет')" />
+
 <body>
-    <div th:replace="includes/header :: header"></div>
-    <div>Личный кабинет</div>
-    <div><h3 th:text="${user}" /></div>
+    <div th:replace="includes/navbar :: navbar" />
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4 mt-3 text-primary size1">Личный кабинет</div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4 mt-2 size2" th:text="${user}" />
+        </div>
+        <table class="table table-bordered mt-3">
+            <thead>
+                <tr>
+                    <th class="text-primary">Название</th>
+                    <th class="text-primary">Результат теста</th>
+                    <th class="text-primary">Приглашение на 2 этап собеседования</th>
+                </tr>
+            </thead>
+            <tbody>
+                <th>
+                    <tr th:each="el, stat : ${results}">
+                        <th scope="row">
+                            <a th:href="@{/analysis/{result}(result=${el.id})}" th:text="'Результат ' + ${stat.index + 1}" />
+                        </th>
+                        <td th:text="${el.rating * 100} + '%'" />
+                        <td th:text="${el.rating > 0.8}? Да : Нет" />
+                    </tr>
+                </th>
+            </tbody>
+        </table>
+    </div>
+
 </body>
 </html>

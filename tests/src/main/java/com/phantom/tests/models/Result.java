@@ -1,6 +1,6 @@
 package com.phantom.tests.models;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -13,7 +13,7 @@ public class Result {
     @ManyToMany
     @JoinTable(name = "answer_result", joinColumns = { @JoinColumn(name = "result_id") }, inverseJoinColumns = {
             @JoinColumn(name = "answer_id") })
-    private Set<Answer> answers;
+    private List<Answer> answers;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -29,11 +29,11 @@ public class Result {
         this.id = id;
     }
 
-    public Set<Answer> getAnswers() {
+    public List<Answer> getAnswers() {
         return answers;
     }
 
-    public void setAnswers(Set<Answer> answers) {
+    public void setAnswers(List<Answer> answers) {
         this.answers = answers;
     }
 
@@ -56,7 +56,7 @@ public class Result {
     public Result() {
     }
 
-    public Result(Set<Answer> answers, User user, float rating) {
+    public Result(List<Answer> answers, User user, float rating) {
         this.answers = answers;
         this.user = user;
         this.rating = rating;

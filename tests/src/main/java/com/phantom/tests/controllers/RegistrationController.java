@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
-import java.util.Map;
 
 @Controller
 public class RegistrationController {
@@ -23,16 +22,16 @@ public class RegistrationController {
     }
 
     @GetMapping("/registration")
-    public String registration(Model model) {
+    public String registration(User user) {
         return "registration";
     }
 
     @PostMapping("/registration")
     public String addUser(@Valid User user, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            Map<String, String> errors = ControllerUtils.getErrors(bindingResult);
-            model.mergeAttributes(errors);
-            model.addAttribute("user", user);
+            //Map<String, String> errors = ControllerUtils.getErrors(bindingResult);
+            //model.mergeAttributes(errors);
+            //model.addAttribute("user", user);
             return "registration";
         }
 

@@ -1,6 +1,6 @@
 package com.phantom.tests.models;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -17,7 +17,7 @@ public class Question {
     private Test test;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "question")
-    private Set<Answer> answers;
+    private List<Answer> answers;
 
 	public Long getId() {
 		return id;
@@ -43,11 +43,11 @@ public class Question {
 		this.test = test;
 	}
 
-	public Set<Answer> getAnswers() {
+	public List<Answer> getAnswers() {
 		return answers;
 	}
 
-	public void setAnswers(Set<Answer> answers) {
+	public void setAnswers(List<Answer> answers) {
 		this.answers = answers;
 	}
 
