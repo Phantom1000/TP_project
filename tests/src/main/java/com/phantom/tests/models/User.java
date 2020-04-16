@@ -9,6 +9,7 @@ import javax.validation.constraints.NotBlank;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name="usr")
@@ -32,13 +33,18 @@ public class User implements UserDetails {
     @NotBlank(message = "Заполните отчество")
     private String patronymic;
 
+    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
+    @Enumerated(EnumType.STRING)
+    private Set<Role> roles;
+
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
     private List<Result> results;
 
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return getRoles();
     }
 
     @Override
@@ -48,7 +54,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return surname + firstname + patronymic;
+        return username;
     }
 
     @Override
@@ -84,8 +90,8 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public void setUsername() {
-        this.username = surname + firstname + patronymic;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getSurname() {
@@ -118,6 +124,14 @@ public class User implements UserDetails {
 
     public void setResults(List<Result> results) {
         this.results = results;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
     @Override

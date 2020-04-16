@@ -14,3 +14,11 @@ create table answer_result (
 alter table if exists result
     add constraint result_user_fk
     foreign key (user_id) references usr;
+
+alter table if exists answer_result
+    add constraint answer_result_answer_fk
+    foreign key (answer_id) references answer;
+
+alter table if exists answer_result
+    add constraint answer_result_result_fk
+    foreign key (result_id) references result;

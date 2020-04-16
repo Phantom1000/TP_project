@@ -11,9 +11,12 @@
             <div class="col-sm-4 mt-3 text-primary size1">Личный кабинет</div>
         </div>
         <div class="row">
-            <div class="col-sm-4 mt-2 size2" th:text="${user}" />
+            <div class="col-sm-5 mt-2 size2" th:text="${user}" />
+            <div class="col-sm-3">
+                <a th:href="@{/profile/{user}/update(user=${id})}" class="btn btn-info">Редактировать профиль</a>
+            </div>
         </div>
-        <table class="table table-bordered mt-3">
+        <table class="table table-bordered mt-5">
             <thead>
                 <tr>
                     <th class="text-primary">Название</th>

@@ -1,9 +1,9 @@
 <th:block th:fragment="navbar">
     <nav class="navbar navbar-dark bg-primary">
+        <a class="nav-link text-white" th:href="@{/}">Главная</a>
         <form th:action="@{/logout}" class="form-inline" method="post">
-            <button class="btn btn-light" type="submit">Выйти</button>
+            <button class="btn btn-light btn-sm" type="submit">Выйти</button>
         </form>
-
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
                 <a class="nav-link" th:href="@{'/profile/' + ${id}}"><div class="_profile"></div></a>

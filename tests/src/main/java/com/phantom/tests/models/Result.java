@@ -15,7 +15,7 @@ public class Result {
             @JoinColumn(name = "answer_id") })
     private List<Answer> answers;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
 

@@ -2,10 +2,7 @@ package com.phantom.tests.controllers;
 
 import java.util.Map;
 
-import com.phantom.tests.models.Position;
-import com.phantom.tests.models.Result;
-import com.phantom.tests.models.Test;
-import com.phantom.tests.models.User;
+import com.phantom.tests.models.*;
 import com.phantom.tests.services.TestService;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -56,13 +53,13 @@ public class TestController {
 
     @GetMapping("/analysis/{result}")
     public String analysisTest(@AuthenticationPrincipal User user, @PathVariable(name = "result") Result result, Model model) {
-        /*if (user.equals(result.getUser())) {*/
+        if (user.equals(result.getUser()) || user.getAuthorities().contains(Role.ADMIN)) {
             model.addAttribute("answers", result.getAnswers());
             model.addAttribute("test", testService.getTestByResult(result));
             model.addAttribute("id", user.getId());
             return "analysis";
-        /*}
-        return "redirect:/";*/
+        }
+        return "redirect:/";
     }
     
 }

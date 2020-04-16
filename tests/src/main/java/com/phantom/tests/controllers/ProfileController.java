@@ -1,19 +1,32 @@
 package com.phantom.tests.controllers;
 
+import com.phantom.tests.models.Role;
 import com.phantom.tests.models.User;
 
+import com.phantom.tests.services.UserService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @Controller
+@RequestMapping("/profile")
 public class ProfileController {
+    private final UserService userService;
+    private final PasswordEncoder passwordEncoder;
 
-    @GetMapping("profile/{id}")
-    public String userEditForm(@AuthenticationPrincipal User currentUser, @PathVariable(name = "id") User user, Model model) {
-        if (currentUser.equals(user)) {
+    public ProfileController(UserService userService, PasswordEncoder passwordEncoder) {
+        this.userService = userService;
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    @GetMapping("/{id}")
+    public String showProfile(@AuthenticationPrincipal User currentUser, @PathVariable(name = "id") User user, Model model) {
+        if (currentUser.equals(user) || currentUser.getAuthorities().contains(Role.ADMIN)) {
             model.addAttribute("user",
                     String.format("%s %s %s", user.getSurname(), user.getFirstname(), user.getPatronymic()));
             model.addAttribute("id", user.getId());
@@ -22,4 +35,29 @@ public class ProfileController {
         }
         return "redirect:/";
     }
+
+    @GetMapping("/{id}/update")
+    public String editProfile(@AuthenticationPrincipal User currentUser, @PathVariable(name = "id") User user, Model model) {
+        if (currentUser.equals(user) || currentUser.getAuthorities().contains(Role.ADMIN)) {
+            model.addAttribute("editUser", user);
+            return "updateProfile";
+        }
+        return "redirect:/";
+    }
+
+    @PostMapping("/{id}/update")
+    public String updateProfile(@AuthenticationPrincipal User currentUser,
+                                @Valid User user, BindingResult bindingResult,
+                                @PathVariable(name = "id") User editUser, Model model) {
+        if (currentUser.equals(editUser) || currentUser.getAuthorities().contains(Role.ADMIN)) {
+            if (bindingResult.hasFieldErrors("surname") || bindingResult.hasFieldErrors("firstname") || bindingResult.hasFieldErrors("patronymic")) {
+                model.addAttribute("editUser", user);
+                return "updateProfile";
+            }
+            userService.updateUser(editUser, user);
+            return "redirect:/profile/" + editUser.getId();
+        }
+        return "redirect:/";
+    }
+
 }
