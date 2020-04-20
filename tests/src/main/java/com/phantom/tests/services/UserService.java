@@ -54,6 +54,10 @@ public class UserService implements UserDetailsService {
         return true;
     }
 
+    public List<User> search(String pattern) {
+        return userRepo.search(pattern);
+    }
+
     public void updateUser(User user, User newUser) {
         String surname = newUser.getSurname();
         String firstname = newUser.getFirstname();

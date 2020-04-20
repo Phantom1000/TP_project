@@ -10,6 +10,10 @@ html {
     font-size: 1.4rem;
 }
 
+.italic {
+    font-style: italic;
+}
+
 ._form {
     margin-top: 20%;
     margin-left: 20%;

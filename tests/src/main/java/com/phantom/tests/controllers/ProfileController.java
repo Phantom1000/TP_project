@@ -26,21 +26,27 @@ public class ProfileController {
 
     @GetMapping("/{id}")
     public String showProfile(@AuthenticationPrincipal User currentUser, @PathVariable(name = "id") User user, Model model) {
-        if (currentUser.equals(user) || currentUser.getAuthorities().contains(Role.ADMIN)) {
-            model.addAttribute("user",
-                    String.format("%s %s %s", user.getSurname(), user.getFirstname(), user.getPatronymic()));
-            model.addAttribute("id", user.getId());
-            model.addAttribute("results", user.getResults());
-            return "profile";
+        if (user != null) {
+            if (currentUser.equals(user) || currentUser.getAuthorities().contains(Role.ADMIN)) {
+                model.addAttribute("user",
+                        String.format("%s %s %s", user.getSurname(), user.getFirstname(), user.getPatronymic()));
+                model.addAttribute("id", user.getId());
+                model.addAttribute("results", user.getResults());
+                model.addAttribute("isView", !(user.getMessages().stream().filter(m -> !m.isView()).count() > 0));
+                return "profile";
+            }
         }
         return "redirect:/";
     }
 
     @GetMapping("/{id}/update")
     public String editProfile(@AuthenticationPrincipal User currentUser, @PathVariable(name = "id") User user, Model model) {
-        if (currentUser.equals(user) || currentUser.getAuthorities().contains(Role.ADMIN)) {
-            model.addAttribute("editUser", user);
-            return "updateProfile";
+        if (user != null) {
+            if (currentUser.equals(user) || currentUser.getAuthorities().contains(Role.ADMIN)) {
+                model.addAttribute("editUser", user);
+                model.addAttribute("id", currentUser.getId());
+                return "updateProfile";
+            }
         }
         return "redirect:/";
     }

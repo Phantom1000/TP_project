@@ -1,29 +1,28 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
-  xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 
-<head th:insert="includes/head :: header(title='Выбор теста')" />
+<head th:insert="includes/head :: header(title='Выбор теста')"/>
 
 <body>
-  <div th:replace="includes/navbar :: navbar" />
-  <div class="container mt-5">
+<div th:replace="includes/navbar :: navbar"/>
+<div class="container mt-5">
     <div class="offset-5 row text-center changeLabel size2">
-      Выберите тест
+        Выберите тест
     </div>
     <form th:action="@{/test}" method="POST">
 
-      <div th:each="el : ${positions}" class="offset-2 form-check mt-4">
-        <input class="form-check-input big" type="radio" name="position" th:value="${el}" id="positionCheck">
-        <label class="form-check-label ml-3 size1" for="positionCheck"
-          th:text="'Тестирование на вакансию ' + ${el} + ' Developer'" />
-      </div>
-      <div class="mt-5 offset-2">
-        <button type="submit" class="btn btn-primary mb-2 wide">Пройти</button>
-      </div>
+        <div th:each="el : ${positions}" class="offset-2 form-check mt-4">
+            <input class="form-check-input big" type="radio" name="position" th:value="${el}" id="positionCheck">
+            <label class="form-check-label ml-3 size1" for="positionCheck"
+                   th:text="'Тестирование на вакансию ' + ${el} + ' Developer'"/>
+        </div>
+        <div class="mt-5 offset-2">
+            <button type="submit" class="btn btn-primary mb-2 wide">Пройти</button>
+        </div>
 
     </form>
-  </div>
-  <div th:replace="includes/scripts :: scripts" />
+</div>
+<div th:replace="includes/scripts :: scripts"/>
 </body>
-
 </html>

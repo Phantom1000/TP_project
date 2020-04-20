@@ -11,7 +11,7 @@ public class Answer {
     private Long id;
 
 	private String text;
-    private Boolean correct;
+    private boolean correct;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "question_id")
@@ -46,11 +46,11 @@ public class Answer {
 		this.question = question;
 	}
 
-	public Boolean getCorrect() {
+	public boolean isCorrect() {
 		return correct;
 	}
 
-	public void setCorrect(Boolean correct) {
+	public void setCorrect(boolean correct) {
 		this.correct = correct;
 	}
 

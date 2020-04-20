@@ -1,59 +1,61 @@
 <th:block th:fragment="form">
-  <th:block th:if="${user}">
-    <div class="form-group">
-      <input type="text" th:field="*{surname}" class="form-control" th:errorclass="is-invalid" placeholder="Фамилия" />
-      <th:block th:if="#{fields.hasErrors('surname')}">
-        <div th:errorclass="invalid-feedback" th:errors="*{surname}" />
-      </th:block>
-    </div>
-  </th:block>
-  <th:block th:unless="${user}">
-    <div class="form-group">
-      <input type="text" name="surname" class="form-control" placeholder="Фамилия" />
-    </div>
-  </th:block>
+    <th:block th:if="${user}">
+        <div class="form-group">
+            <input type="text" th:field="*{surname}" class="form-control" th:errorclass="is-invalid"
+                   placeholder="Фамилия"/>
+            <th:block th:if="#{fields.hasErrors('surname')}">
+                <div th:errorclass="invalid-feedback" th:errors="*{surname}"/>
+            </th:block>
+        </div>
+    </th:block>
+    <th:block th:unless="${user}">
+        <div class="form-group">
+            <input type="text" name="surname" class="form-control" placeholder="Фамилия"/>
+        </div>
+    </th:block>
 
-  <th:block th:if="${user}">
-    <div class="form-group">
-      <input type="text" th:field="*{firstname}" class="form-control" th:errorclass="is-invalid" placeholder="Имя" />
-      <th:block th:if="#{fields.hasErrors('firstname')}">
-        <div th:errorclass="invalid-feedback" th:errors="*{firstname}" />
-      </th:block>
-    </div>
-  </th:block>
-  <th:block th:unless="${user}">
-    <div class="form-group">
-      <input type="text" name="firstname" class="form-control" placeholder="Имя" />
-    </div>
-  </th:block>
+    <th:block th:if="${user}">
+        <div class="form-group">
+            <input type="text" th:field="*{firstname}" class="form-control" th:errorclass="is-invalid"
+                   placeholder="Имя"/>
+            <th:block th:if="#{fields.hasErrors('firstname')}">
+                <div th:errorclass="invalid-feedback" th:errors="*{firstname}"/>
+            </th:block>
+        </div>
+    </th:block>
+    <th:block th:unless="${user}">
+        <div class="form-group">
+            <input type="text" name="firstname" class="form-control" placeholder="Имя"/>
+        </div>
+    </th:block>
 
-  <th:block th:if="${user}">
-    <div class="form-group">
-      <input type="text" th:field="*{patronymic}" class="form-control" th:errorclass="is-invalid"
-        placeholder="Отчество" />
-      <th:block th:if="#{fields.hasErrors('patronymic')}">
-        <div th:errorclass="invalid-feedback" th:errors="*{patronymic}" />
-      </th:block>
-    </div>
-  </th:block>
-  <th:block th:unless="${user}">
-    <div class="form-group">
-      <input type="text" name="patronymic" class="form-control" placeholder="Отчество" />
-    </div>
-  </th:block>
+    <th:block th:if="${user}">
+        <div class="form-group">
+            <input type="text" th:field="*{patronymic}" class="form-control" th:errorclass="is-invalid"
+                   placeholder="Отчество"/>
+            <th:block th:if="#{fields.hasErrors('patronymic')}">
+                <div th:errorclass="invalid-feedback" th:errors="*{patronymic}"/>
+            </th:block>
+        </div>
+    </th:block>
+    <th:block th:unless="${user}">
+        <div class="form-group">
+            <input type="text" name="patronymic" class="form-control" placeholder="Отчество"/>
+        </div>
+    </th:block>
 
-  <th:block th:if="${user}">
-    <div class="form-group">
-      <input type="password" th:field="*{password}" class="form-control" th:errorclass="is-invalid"
-        placeholder="Пароль" />
-      <th:block th:if="#{fields.hasErrors('password')}">
-        <div th:errorclass="invalid-feedback" th:errors="*{password}" />
-      </th:block>
-    </div>
-  </th:block>
-  <th:block th:unless="${user}">
-    <div class="form-group">
-      <input type="password" name="password" class="form-control" placeholder="Пароль" />
-    </div>
-  </th:block>
+    <th:block th:if="${user}">
+        <div class="form-group">
+            <input type="password" th:field="*{password}" class="form-control" th:errorclass="is-invalid"
+                   placeholder="Пароль"/>
+            <th:block th:if="#{fields.hasErrors('password')}">
+                <div th:errorclass="invalid-feedback" th:errors="*{password}"/>
+            </th:block>
+        </div>
+    </th:block>
+    <th:block th:unless="${user}">
+        <div class="form-group">
+            <input type="password" name="password" class="form-control" placeholder="Пароль"/>
+        </div>
+    </th:block>
 </th:block>

@@ -1,29 +1,31 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
-    xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 
-<head th:insert="includes/head :: header(title='Тест')" />
+<head th:insert="includes/head :: header(title='Тест')"/>
 
 <body>
-    <div th:replace="includes/navbar :: navbar"></div>
-    <div class="container mt-5">
-        <div class="offset-5 row text-center testLabel size2 mb-4"
-            th:text="'Тестирование на вакансию ' + ${position} + ' Developer'" />
-        <form method="POST" th:action="@{/record}">
-            <div th:each="el, status : ${test.questions}" class="offset-2 form-group size1 mt-3">
-                <div th:text="${el.text}" class="font-weight-bold" />
-                <div th:each="ans : ${el.answers}" class="form-check mt-2">
+<div th:replace="includes/navbar :: navbar"></div>
+<div class="container mt-5">
+    <div class="offset-5 row text-center testLabel size2 mb-4"
+         th:text="'Тестирование на вакансию ' + ${position} + ' Developer'"/>
+    <form method="POST" th:action="@{/record}">
+        <div th:each="el, status : ${test.questions}" class="offset-2 form-group size1 mt-3">
+            <div th:text="${el.text}" class="font-weight-bold"/>
+            <div th:each="ans : ${el.answers}" class="form-check mt-2">
 
-                    <input class="form-check-input big" type="radio" th:name="${el.id}" th:value="${ans.id}" />
-                    <label class="form-check-label" th:text="${ans.text}" />
-                </div>
+                <input class="form-check-input big" type="radio" th:name="${el.id}" th:value="${ans.id}"/>
+                <label class="form-check-label" th:text="${ans.text}"/>
             </div>
-            <div class="mt-5 text-center">
-                <button type="submit" class="btn btn-primary mb-2">Завершить тестирование</button>
-            </div>
-        </form>
-    </div>
+        </div>
+        <div class="mt-5 text-center">
+            <button type="submit" class="btn btn-primary mb-2">Завершить тестирование</button>
+        </div>
+    </form>
+</div>
 
 
-    </div>
+</div>
+<div th:replace="includes/scripts :: scripts"/>
 </body>
+</html>

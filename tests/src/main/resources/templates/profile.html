@@ -2,41 +2,43 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 
-<head th:insert="includes/head :: header(title='Личный кабинет')" />
+<head th:insert="includes/head :: header(title='Личный кабинет')"/>
 
 <body>
-    <div th:replace="includes/navbar :: navbar" />
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-4 mt-3 text-primary size1">Личный кабинет</div>
-        </div>
-        <div class="row">
-            <div class="col-sm-5 mt-2 size2" th:text="${user}" />
-            <div class="col-sm-3">
-                <a th:href="@{/profile/{user}/update(user=${id})}" class="btn btn-info">Редактировать профиль</a>
-            </div>
-        </div>
-        <table class="table table-bordered mt-5">
-            <thead>
-                <tr>
-                    <th class="text-primary">Название</th>
-                    <th class="text-primary">Результат теста</th>
-                    <th class="text-primary">Приглашение на 2 этап собеседования</th>
-                </tr>
-            </thead>
-            <tbody>
-                <th>
-                    <tr th:each="el, stat : ${results}">
-                        <th scope="row">
-                            <a th:href="@{/analysis/{result}(result=${el.id})}" th:text="'Результат ' + ${stat.index + 1}" />
-                        </th>
-                        <td th:text="${el.rating * 100} + '%'" />
-                        <td th:text="${el.rating > 0.8}? Да : Нет" />
-                    </tr>
-                </th>
-            </tbody>
-        </table>
+<div th:replace="includes/navbar :: navbar"/>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4 mt-3 text-primary size1">Личный кабинет</div>
     </div>
-
+    <div class="row">
+        <div class="col-sm-5 mt-2 size2" th:text="${user}"/>
+        <div class="col-sm-3">
+            <a th:href="@{/profile/{user}/update(user=${id})}" class="btn btn-info">Редактировать профиль</a>
+        </div>
+        <div class="col-sm-3">
+            <a th:href="@{/message/{user}(user=${id})}" class="btn"
+               th:classappend="${isView}? btn-outline-success : btn-success">Сообщения</a>
+        </div>
+    </div>
+    <table class="table table-bordered mt-5">
+        <thead>
+        <tr>
+            <th class="text-primary">Название</th>
+            <th class="text-primary">Результат теста</th>
+            <th class="text-primary">Приглашение на 2 этап собеседования</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="el, stat : ${results}">
+            <th scope="row">
+                <a th:href="@{/analysis/{result}(result=${el.id})}" th:text="'Результат ' + ${stat.index + 1}"/>
+            </th>
+            <td th:text="${el.rating * 100} + '%'"/>
+            <td th:text="${el.rating > 0.8}? Да : Нет"/>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div th:replace="includes/scripts :: scripts"/>
 </body>
 </html>

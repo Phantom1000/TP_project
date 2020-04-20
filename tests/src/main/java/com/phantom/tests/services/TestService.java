@@ -27,6 +27,8 @@ public class TestService {
         return testRepo.findById(id).orElseThrow();
     }
 
+    public Iterable<Test> findAll() { return testRepo.findAll(); }
+
     public Test getTestByResult(Result result) {
         Answer answer = result.getAnswers().get(0);
         Question question = answer.getQuestion();
@@ -48,7 +50,7 @@ public class TestService {
         for(Map.Entry<String, String> item : form.entrySet()) {
             answers.add(answerRepo.findById(Long.parseLong(item.getValue())).orElseThrow());
         }
-        float rating = answers.stream().filter(ans -> ans.getCorrect()).count() / (float)answers.size();
+        float rating = answers.stream().filter(ans -> ans.isCorrect()).count() / (float)answers.size();
         Result res = new Result(answers, user, rating);
         resultRepo.save(res);
         return res;
