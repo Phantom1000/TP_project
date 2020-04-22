@@ -12,10 +12,12 @@
         <div class="col-sm-2 size1"><a class="nav-link text-dark" th:href="@{/(show=users)}">Пользователи</a></div>
         <div class="col-sm-2 size1"><a class="nav-link text-dark" th:href="@{/(show=tests)}">Тесты</a></div>
         <form th:if="${show.equals('users')}" method="get" th:action="@{/}" class="form-inline">
-            <input type="hidden" name="show" th:value="${show}" />
+            <input type="hidden" name="show" th:value="${show}"/>
             <input class="form-control" name="search" type="text" placeholder="Поиск..." aria-label="Search">
             <button class="btn btn-outline-success ml-2" type="submit">Найти</button>
         </form>
+        <a th:if="${show.equals('tests')}" class="ml-3 btn btn-success" th:href="@{test/create}"><i
+                class="fa fa-plus"></i> Добавить тест</a>
     </div>
 
     <table class="table table-bordered mt-2 col-sm-10">
@@ -71,7 +73,7 @@
                 <td th:text="${el.position} + ' Developer'"/>
                 <td width="500">
                     <div class="row d-flex">
-                        <a class="ml-3 btn btn-primary" th:href="@{test/{id}/edit(id=${el.id})}"><i
+                        <a class="ml-3 btn btn-primary" th:href="@{test/{id}/update(id=${el.id})}"><i
                                 class="fa fa-edit"></i> Редактировать</a>
                         <form method="post" th:action="@{test/{id}/delete(id=${el.id})}">
                             <button type="submit" class="ml-3 btn btn-danger"><i class="fa fa-trash"></i> Удалить

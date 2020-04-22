@@ -29,9 +29,6 @@ public class RegistrationController {
     @PostMapping("/registration")
     public String addUser(@Valid User user, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            //Map<String, String> errors = ControllerUtils.getErrors(bindingResult);
-            //model.mergeAttributes(errors);
-            //model.addAttribute("user", user);
             return "registration";
         }
 
@@ -43,10 +40,10 @@ public class RegistrationController {
 
         SecurityContext context = SecurityContextHolder.getContext();
         context.setAuthentication(
-            new UsernamePasswordAuthenticationToken(
-                    user,
-                    null,
-                    user.getAuthorities()));
+                new UsernamePasswordAuthenticationToken(
+                        user,
+                        null,
+                        user.getAuthorities()));
         return "redirect:/";
     }
 }

@@ -11,8 +11,8 @@ public class Result {
     private Long id;
 
     @ManyToMany
-    @JoinTable(name = "answer_result", joinColumns = { @JoinColumn(name = "result_id") }, inverseJoinColumns = {
-            @JoinColumn(name = "answer_id") })
+    @JoinTable(name = "answer_result", joinColumns = {@JoinColumn(name = "result_id")}, inverseJoinColumns = {
+            @JoinColumn(name = "answer_id")})
     private List<Answer> answers;
 
     @ManyToOne(fetch = FetchType.EAGER)

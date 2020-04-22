@@ -39,8 +39,7 @@ public class MessageController {
                 }
                 model.addAttribute("id", currentUser.getId());
                 model.addAttribute("isAdmin", isAdmin);
-            }
-            else if (currentUser.getRoles().contains(Role.ADMIN)) {
+            } else if (currentUser.getRoles().contains(Role.ADMIN)) {
                 if (isAdmin) {
                     model.addAttribute("messages", messageService.findAll());
                 } else {

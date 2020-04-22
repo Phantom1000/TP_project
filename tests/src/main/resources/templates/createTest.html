@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head th:insert="includes/head :: header(title='Добавление')"/>
+
+<body>
+
+<div th:replace="includes/navbar :: navbar"/>
+<form th:action="@{/test/store}" method="post">
+    <div class="container mt-5">
+        <div class="row mb-4">
+            <div class="form-inline size2">
+                Вакансия:
+                <div th:each="el, stat : ${positions}" class="form-check ml-3 mt-1">
+                    <input class="form-check-input big mr-2" type="radio" name="position"
+                           th:id="'position' + ${stat.index}" th:value="${el}" th:checked="${stat.index == 0}">
+                    <label class="form-check-label" th:for="'position' + ${stat.index}" th:text="${el}"/>
+                </div>
+            </div>
+
+        </div>
+        <div id="listQuestion">
+            <div th:each="i: ${#numbers.sequence(0, 3)}" class="offset-2 form-group mt-5">
+                <textarea th:name="'questions' + ${i}" rows="1" cols="40" th:text="'Вопрос ' + ${i + 1}"
+                          class="form-control size1 mb-2"/>
+                <button class="btn btn-primary" type="button" data-toggle="collapse"
+                        th:data-target="'#answerCollapse' + ${i}" aria-expanded="false"
+                        th:aria-controls="'#answerCollapse' + ${i}">
+                    Ответы
+                </button>
+                <div class="collapse mt-3" th:id="'answerCollapse' + ${i}">
+                    <div class="form-group mb-3" th:each="j: ${#numbers.sequence(0, 3)}">
+                        <input type="radio" class="form-check-input big" th:name="'correct' + ${i}" th:value="${j}"
+                               th:checked="${j == 0}"/>
+                        <textarea th:name="'answers' + ${(i * 4 + j)}" rows="4" cols="40" th:text="'Ответ ' + ${j + 1}"
+                                  class="form-control mb-3"/>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="form-group text-center mt-2">
+        <button type="submit" class="btn btn-success">Сохранить</button>
+    </div>
+</form>
+<div th:replace="includes/scripts :: scripts"/>
+</body>
+</html>

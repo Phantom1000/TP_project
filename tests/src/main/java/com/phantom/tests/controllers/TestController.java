@@ -1,11 +1,15 @@
 package com.phantom.tests.controllers;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 import com.phantom.tests.models.*;
 import com.phantom.tests.services.TestService;
 
 import com.phantom.tests.services.UserService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -84,4 +88,59 @@ public class TestController {
         return "redirect:/";
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @GetMapping("/test/{id}")
+    public String showTest(@AuthenticationPrincipal User user, @PathVariable(name = "id") Test test, Model model) {
+        if (test != null) {
+            model.addAttribute("test", test);
+            model.addAttribute("id", user.getId());
+            return "showTest";
+        }
+        return "redirect:/?show=tests";
+    }
+
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @GetMapping("/test/{id}/update")
+    public String editTest(@AuthenticationPrincipal User user, @PathVariable(name = "id") Test test, Model model) {
+        if (test != null) {
+            model.addAttribute("test", test);
+            model.addAttribute("errors", new ArrayList<String>());
+            model.addAttribute("id", user.getId());
+            return "updateTest";
+        }
+        return "redirect:/?show=tests";
+    }
+
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @PostMapping("/test/{id}/update")
+    public String updateTest(@AuthenticationPrincipal User user, @PathVariable(name = "id") Test test,
+                             @RequestParam Map<String, String> form,
+                             Model model) {
+        if (test != null) {
+            testService.updateTest(form, test);
+        }
+        return "redirect:/?show=tests";
+    }
+
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @GetMapping("/test/create")
+    public String createTest(@AuthenticationPrincipal User user, Model model) {
+        model.addAttribute("positions", Position.values());
+        model.addAttribute("id", user.getId());
+        return "createTest";
+    }
+
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @PostMapping("/test/store")
+    public String storeTest(@AuthenticationPrincipal User user, @RequestParam Map<String, String> form, Model model) {
+        testService.createTest(form);
+        return "redirect:/?show=tests";
+    }
+
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @PostMapping("/test/{id}/delete")
+    public String destroyTest(@AuthenticationPrincipal User user,  @PathVariable(name = "id") Test test, Model model) {
+        testService.deleteTest(test);
+        return "redirect:/?show=tests";
+    }
 }

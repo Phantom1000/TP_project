@@ -31,7 +31,8 @@
         <tbody>
         <tr th:each="el, stat : ${results}">
             <th scope="row">
-                <a th:href="@{/analysis/{result}(result=${el.id})}" th:text="'Результат ' + ${stat.index + 1}"/>
+                <a th:href="@{/analysis/{result}(result=${el.id})}"
+                   th:text="'Тестирование на вакансию ' + ${jobs[stat.index]} + ' Developer'"/>
             </th>
             <td th:text="${el.rating * 100} + '%'"/>
             <td th:text="${el.rating > 0.8}? Да : Нет"/>

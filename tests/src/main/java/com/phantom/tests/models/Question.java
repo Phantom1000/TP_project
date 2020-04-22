@@ -19,37 +19,43 @@ public class Question {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "question")
     private List<Answer> answers;
 
-	public Long getId() {
-		return id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public String getText() {
-		return text;
-	}
+    public String getText() {
+        return text;
+    }
 
-	public void setText(String text) {
-		this.text = text;
-	}
+    public void setText(String text) {
+        this.text = text;
+    }
 
-	public Test getTest() {
-		return test;
-	}
+    public Test getTest() {
+        return test;
+    }
 
-	public void setTest(Test test) {
-		this.test = test;
-	}
+    public void setTest(Test test) {
+        this.test = test;
+    }
 
-	public List<Answer> getAnswers() {
-		return answers;
-	}
+    public List<Answer> getAnswers() {
+        return answers;
+    }
 
-	public void setAnswers(List<Answer> answers) {
-		this.answers = answers;
-	}
+    public void setAnswers(List<Answer> answers) {
+        this.answers = answers;
+    }
 
-    
+    public Question() {
+    }
+
+    public Question(String text, Test test) {
+        this.text = text;
+        this.test = test;
+    }
 }

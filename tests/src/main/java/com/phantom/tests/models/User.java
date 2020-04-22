@@ -12,14 +12,14 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name="usr")
+@Table(name = "usr")
 public class User implements UserDetails {
     /**
-	 *
-	 */
+     *
+     */
     private static final long serialVersionUID = -8180852615663594685L;
-    
-	@Id
+
+    @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String username;
@@ -169,5 +169,5 @@ public class User implements UserDetails {
             return false;
         return true;
     }
-    
+
 }

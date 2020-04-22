@@ -19,7 +19,9 @@ public class MessageService {
         messageRepo.save(message);
     }
 
-    public Iterable<Message> findAll() { return messageRepo.findAll(); }
+    public Iterable<Message> findAll() {
+        return messageRepo.findAll();
+    }
 
     public void viewMessage(Message message) {
         message.setView(true);

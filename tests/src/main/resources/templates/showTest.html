@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head th:insert="includes/head :: header(title='Просмотр')"/>
+
+<body>
+<div th:replace="includes/navbar :: navbar"/>
+<div class="container mt-5">
+    <div class="offset-5 row text-center mb-4 size2" th:text="'Тест на вакансию ' + ${test.position} + ' Developer'"/>
+    <div th:each="el: ${test.questions}" class="offset-2 form-group mt-3">
+        <div th:text="${el.text}" class="size1"/>
+        <ul class="list-group mt-2">
+            <li th:each="ans : ${el.answers}" class="list-group-item">
+                <i th:class="${ans.correct}? 'fa fa-check text-success' : 'fa fa-times text-danger' "></i>
+                <th:block th:text="${ans.text}"></th:block>
+            </li>
+        </ul>
+    </div>
+</div>
+<div th:replace="includes/scripts :: scripts"/>
+</body>
+</html>
