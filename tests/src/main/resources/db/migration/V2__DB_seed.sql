@@ -40,3 +40,5 @@ insert into answer (id, text, correct, question_id) values
 (58, 'Неправильный ответ', false, 15), (59, 'Неправильный ответ', false, 15), (60, 'Неправильный ответ', false, 15), 
 (61, 'SerialVersionUID нужно изменять при внесении в класс несовместимых изменений, например при удалении какого-либо его атрибута.', true, 16), 
 (62, 'Неправильный ответ', false, 16), (63, 'Неправильный ответ', false, 16), (64, 'Неправильный ответ', false, 16);
+
+insert into answer (id, text, correct, question_id) values (65, '', false, null);

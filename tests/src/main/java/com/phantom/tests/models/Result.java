@@ -10,6 +10,10 @@ public class Result {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "test_id")
+    private Test test;
+
     @ManyToMany
     @JoinTable(name = "answer_result", joinColumns = {@JoinColumn(name = "result_id")}, inverseJoinColumns = {
             @JoinColumn(name = "answer_id")})
@@ -53,10 +57,19 @@ public class Result {
         this.rating = rating;
     }
 
+    public Test getTest() {
+        return test;
+    }
+
+    public void setTest(Test test) {
+        this.test = test;
+    }
+
     public Result() {
     }
 
-    public Result(List<Answer> answers, User user, float rating) {
+    public Result(List<Answer> answers, User user, float rating, Test test) {
+        this.test = test;
         this.answers = answers;
         this.user = user;
         this.rating = rating;

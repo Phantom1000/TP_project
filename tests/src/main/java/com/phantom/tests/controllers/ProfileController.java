@@ -39,7 +39,7 @@ public class ProfileController {
                 model.addAttribute("results", user.getResults());
                 model.addAttribute("isView", !(user.getMessages().stream().filter(m -> !m.isView()).count() > 0));
                 List<String> jobs = new ArrayList<>();
-                user.getResults().stream().forEach(r -> jobs.add(testService.getTestByResult(r).getPosition().toString()));
+                user.getResults().stream().forEach(r -> jobs.add(r.getTest().getPosition().toString()));
                 model.addAttribute("jobs", jobs);
                 return "profile";
             }

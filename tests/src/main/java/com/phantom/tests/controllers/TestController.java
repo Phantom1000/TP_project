@@ -1,7 +1,6 @@
 package com.phantom.tests.controllers;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -67,8 +66,8 @@ public class TestController {
     }
 
     @PostMapping("/record")
-    public String recordTest(@AuthenticationPrincipal User user, @RequestParam Map<String, String> form, Model model) {
-        Result res = testService.getResult(form, user);
+    public String recordTest(@AuthenticationPrincipal User user, @RequestParam Test test, @RequestParam Map<String, String> form, Model model) {
+        Result res = testService.getResult(form, user, test);
         model.addAttribute("rating", (int) (res.getRating() * 100));
         model.addAttribute("result", res.getId());
         model.addAttribute("id", user.getId());
@@ -80,7 +79,41 @@ public class TestController {
         if (result != null) {
             if (user.equals(result.getUser()) || user.getAuthorities().contains(Role.ADMIN)) {
                 model.addAttribute("answers", result.getAnswers());
-                model.addAttribute("test", testService.getTestByResult(result));
+                model.addAttribute("test", result.getTest());
+                List<Boolean> correct = new ArrayList<>();
+                List<String> colors = new ArrayList<>();
+                List<Question> questions = result.getTest().getQuestions();
+                for (Question question : questions) {
+                    for (Answer answer : question.getAnswers()) {
+                        String color = "";
+                        if (answer.isCorrect()) {
+                            color = "text-success";
+                        }
+                        for (Answer answer2 : result.getAnswers()) {
+                            if (question.equals(answer2.getQuestion())) {
+                                if (answer.equals(answer2)) {
+                                    color = "text-primary";
+                                }
+                            }
+
+                        }
+                        colors.add(color);
+                    }
+                }
+                outer:
+                for (Question question : questions) {
+                    for (Answer answer : result.getAnswers()) {
+                        if (answer.getQuestion() == null) {
+                            correct.add(false);
+                            continue outer;
+                        } else if (question.equals(answer.getQuestion())) {
+                            correct.add(answer.isCorrect());
+                            continue outer;
+                        }
+                    }
+                }
+                model.addAttribute("correct", correct);
+                model.addAttribute("colors", colors);
                 model.addAttribute("id", user.getId());
                 return "analysis";
             }
@@ -139,7 +172,7 @@ public class TestController {
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/test/{id}/delete")
-    public String destroyTest(@AuthenticationPrincipal User user,  @PathVariable(name = "id") Test test, Model model) {
+    public String destroyTest(@AuthenticationPrincipal User user, @PathVariable(name = "id") Test test, Model model) {
         testService.deleteTest(test);
         return "redirect:/?show=tests";
     }

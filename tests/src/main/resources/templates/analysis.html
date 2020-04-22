@@ -10,12 +10,11 @@
     <div class="offset-5 row text-center mb-4 size2">Анализ тестирования:</div>
     <div th:each="el, status : ${test.questions}" class="offset-2 form-group mt-3">
         <div th:text="${el.text}" class="size1"
-             th:classappend="${answers.get(status.index).isCorrect()}? text-success : text-danger"/>
+             th:classappend="${correct.get(status.index)}? text-success : text-danger"/>
         <ul class="list-group mt-2">
-            <li th:each="ans : ${el.answers}"
-                th:with="color=(${answers.get(status.index).equals(ans)}? text-primary : '')"
+            <li th:each="ans, stat2 : ${el.answers}"
                 class="list-group-item"
-                th:classappend="${ans.isCorrect() && !answers.get(status.index).equals(ans)}? text-success : ${color}"
+                th:classappend="${colors.get(status.index * 4 + stat2.index)}"
                 th:text="${ans.text}"/>
         </ul>
     </div>

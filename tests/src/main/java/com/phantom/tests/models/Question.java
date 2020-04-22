@@ -1,6 +1,7 @@
 package com.phantom.tests.models;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.*;
 
@@ -57,5 +58,18 @@ public class Question {
     public Question(String text, Test test) {
         this.text = text;
         this.test = test;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Question question = (Question) o;
+        return id.equals(question.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

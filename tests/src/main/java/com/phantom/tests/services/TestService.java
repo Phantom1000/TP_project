@@ -1,9 +1,6 @@
 package com.phantom.tests.services;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 import com.phantom.tests.models.*;
 import com.phantom.tests.repos.AnswerRepo;
@@ -17,6 +14,7 @@ import org.springframework.stereotype.Service;
 public class TestService {
     private final int QUESTION_COUNT = 4;
     private final int ANSWER_COUNT = 4;
+    private final Long EMPTY_ANSWER = 65L;
 
     private final TestRepo testRepo;
     private final AnswerRepo answerRepo;
@@ -31,29 +29,31 @@ public class TestService {
         return testRepo.findAll();
     }
 
-    public Test getTestByResult(Result result) {
-        Answer answer = result.getAnswers().get(0);
-        Question question = answer.getQuestion();
-        return question.getTest();
-    }
-
     public Test getRandomTestByPosition(Position position) {
         Random rnd = new Random();
         List<Test> tests = testRepo.findByPosition(position);
         Test test = tests.get(rnd.nextInt(tests.size()));
-        //Collections.shuffle(test.getQuestions());
-        //test.getQuestions().stream().forEach(a -> Collections.shuffle(a.getAnswers()));
+        /*Collections.shuffle(test.getQuestions());
+        test.getQuestions().stream().forEach(a -> Collections.shuffle(a.getAnswers()));*/
         return test;
     }
 
-    public Result getResult(Map<String, String> form, User user) {
+    public Result getResult(Map<String, String> form, User user, Test test) {
         form.remove("_csrf");
+        form.remove("test");
         List<Answer> answers = new ArrayList<>();
-        for (Map.Entry<String, String> item : form.entrySet()) {
-            answers.add(answerRepo.findById(Long.parseLong(item.getValue())).orElseThrow());
+        outer: for (Question question : test.getQuestions()) {
+            for (Map.Entry<String, String> item : form.entrySet()) {
+                if (Long.parseLong(item.getKey()) == question.getId()) {
+                    answers.add(answerRepo.findById(Long.parseLong(item.getValue())).orElseThrow());
+                    continue outer;
+                }
+            }
+            answers.add(answerRepo.findById(EMPTY_ANSWER).orElseThrow());
         }
+
         float rating = answers.stream().filter(ans -> ans.isCorrect()).count() / (float) answers.size();
-        Result res = new Result(answers, user, rating);
+        Result res = new Result(answers, user, rating, test);
         resultRepo.save(res);
         return res;
     }

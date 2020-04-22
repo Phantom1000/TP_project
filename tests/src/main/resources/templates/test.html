@@ -10,6 +10,7 @@
     <div class="offset-5 row text-center testLabel size2 mb-4"
          th:text="'Тестирование на вакансию ' + ${position} + ' Developer'"/>
     <form method="POST" th:action="@{/record}">
+        <input type="hidden" name="test" th:value="${test.id}">
         <div th:each="el, status : ${test.questions}" class="offset-2 form-group size1 mt-3">
             <div th:text="${el.text}" class="font-weight-bold"/>
             <div th:each="ans : ${el.answers}" class="form-check mt-2">
