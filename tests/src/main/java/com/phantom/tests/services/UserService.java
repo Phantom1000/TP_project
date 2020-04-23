@@ -39,11 +39,11 @@ public class UserService implements UserDetailsService {
     }
 
     public User findById(Long id) {
-        return userRepo.findById(id).orElseThrow();
+        return userRepo.findById(id).orElse(null);
     }
 
     public boolean addUser(User user) {
-        User userFromDb = userRepo.findByUsername(user.getUsername());
+        User userFromDb = userRepo.findByUsername(user.getSurname() + user.getFirstname() + user.getPatronymic());
         if (userFromDb != null) {
             return false;
         }

@@ -22,7 +22,7 @@ public class TestService {
     private final ResultRepo resultRepo;
 
     public Test getTest(Long id) {
-        return testRepo.findById(id).orElseThrow();
+        return testRepo.findById(id).orElse(null);
     }
 
     public Iterable<Test> findAll() {
@@ -45,11 +45,11 @@ public class TestService {
         outer: for (Question question : test.getQuestions()) {
             for (Map.Entry<String, String> item : form.entrySet()) {
                 if (Long.parseLong(item.getKey()) == question.getId()) {
-                    answers.add(answerRepo.findById(Long.parseLong(item.getValue())).orElseThrow());
+                    answers.add(answerRepo.findById(Long.parseLong(item.getValue())).orElse(null));
                     continue outer;
                 }
             }
-            answers.add(answerRepo.findById(EMPTY_ANSWER).orElseThrow());
+            answers.add(answerRepo.findById(EMPTY_ANSWER).orElse(null));
         }
 
         float rating = answers.stream().filter(ans -> ans.isCorrect()).count() / (float) answers.size();
