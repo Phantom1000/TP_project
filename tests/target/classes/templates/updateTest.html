@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head th:insert="includes/head :: header(title='Просмотр')"/>
+
+<body>
+
+<div th:replace="includes/navbar :: navbar"/>
+<form th:action="@{/test/{id}/update(id=${test.id})}" method="post">
+    <div class="container mt-5">
+        <div class="row mb-4">
+            <div class="offset-sm-2 col-sm-6 size2" th:text="'Тест на вакансию ' + ${test.position} + ' Developer'"/>
+        </div>
+        <div id="listQuestion">
+            <div th:each="el, stat: ${test.questions}" class="offset-2 form-group mt-5">
+                <textarea th:name="'questions' + ${stat.index}" rows="1" cols="40" th:text="${el.text}"
+                          class="form-control size1 mb-2"/>
+                <button class="btn btn-primary" type="button" data-toggle="collapse"
+                        th:data-target="'#answerCollapse' + ${stat.index}" aria-expanded="false"
+                        th:aria-controls="'#answerCollapse' + ${stat.index}">
+                    Ответы
+                </button>
+                <div class="collapse mt-3" th:id="'answerCollapse' + ${stat.index}">
+                    <div class="form-group mb-3" th:each="ans, stat2 : ${el.answers}">
+                        <input type="radio" class="form-check-input big" th:name="'correct' + ${stat.index}"
+                               th:value="${ans.id}" th:checked="${ans.correct}"/>
+                        <textarea th:name="'answers' + ${(stat.index * 4 + stat2.index)}" rows="4" cols="40"
+                                  th:text="${ans.text}" class="form-control mb-3"/>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="form-group text-center mt-2">
+        <button type="submit" class="btn btn-success">Сохранить</button>
+    </div>
+</form>
+<div th:replace="includes/scripts :: scripts"/>
+</body>
+</html>

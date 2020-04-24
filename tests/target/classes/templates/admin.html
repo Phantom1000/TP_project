@@ -1,0 +1,93 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head th:insert="includes/head :: header(title='Главная')"/>
+
+<body>
+<div th:replace="includes/navbar :: navbar"/>
+<div class="container">
+    <div class="row mt-4">
+        <div class="col-sm-4 text-primary size2">Панель администратора</div>
+        <div class="col-sm-2 size1"><a class="nav-link text-dark" th:href="@{/(show=users)}">Пользователи</a></div>
+        <div class="col-sm-2 size1"><a class="nav-link text-dark" th:href="@{/(show=tests)}">Тесты</a></div>
+        <form th:if="${show.equals('users')}" method="get" th:action="@{/}" class="form-inline">
+            <input type="hidden" name="show" th:value="${show}"/>
+            <input class="form-control" name="search" type="text" placeholder="Поиск..." aria-label="Search">
+            <button class="btn btn-outline-success ml-2" type="submit">Найти</button>
+        </form>
+        <a th:if="${show.equals('tests')}" class="ml-3 btn btn-success" th:href="@{test/create}"><i
+                class="fa fa-plus"></i> Добавить тест</a>
+    </div>
+
+    <table class="table table-bordered mt-2 col-sm-10">
+        <th:block th:if="${show.equals('users')}">
+            <thead>
+            <tr>
+                <th class="text-center">ФИО</th>
+                <th class="text-center">Действия</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="el, stat : ${users}" th:if="${el.id != id}">
+                <td>
+                    <a class="nav-link" th:href="@{/profile/{user}(user=${el.id})}"
+                       th:text="${el.surname + ' ' + el.firstname + ' ' + el.patronymic}"/>
+                </td>
+                <td width="500">
+                    <button class="btn btn-primary" type="button" data-toggle="collapse"
+                            th:data-target="'#messageCollapse' + ${stat.index}" aria-expanded="false"
+                            th:aria-controls="'#messageCollapse' + ${stat.index}">
+                        <i class="fa fa-comment"></i> Написать сообщение
+                    </button>
+                    <div class="collapse mt-3" th:id="'messageCollapse' + ${stat.index}">
+                        <form th:action="@{/message}" method="post">
+                            <input type="hidden" name="recipient" th:value="${el.id}">
+                            <div class="form-inline">
+                                <textarea name="text" class="form-control" rows="8" cols="30"
+                                          placeholder="Текст сообщения..."></textarea>
+                            </div>
+                            <div class="form-group mt-2">
+                                <button type="submit" class="btn btn-success">Отправить</button>
+                            </div>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </th:block>
+        <th:block th:if="${show.equals('tests')}">
+            <thead>
+            <tr>
+                <th class="text-center">Название</th>
+                <th class="text-center">Вакансия</th>
+                <th class="text-center">Действия</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="el, stat : ${tests}">
+                <td>
+                    <a class="nav-link" th:href="@{test/{id}(id=${el.id})}"
+                       th:text="'Тест №' + ${stat.index + 1}"/>
+                </td>
+                <td th:text="${el.position} + ' Developer'"/>
+                <td width="500">
+                    <div class="row d-flex">
+                        <a class="ml-3 btn btn-primary" th:href="@{test/{id}/update(id=${el.id})}"><i
+                                class="fa fa-edit"></i> Редактировать</a>
+                        <form method="post" th:action="@{test/{id}/delete(id=${el.id})}">
+                            <button type="submit" class="ml-3 btn btn-danger"><i class="fa fa-trash"></i> Удалить
+                            </button>
+                        </form>
+                    </div>
+
+                </td>
+            </tr>
+            </tbody>
+        </th:block>
+
+    </table>
+</div>
+<div th:replace="includes/scripts :: scripts"/>
+</body>
+</html>

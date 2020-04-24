@@ -1,0 +1,12 @@
+<th:block th:fragment="form">
+    <div th:each="el: ${test.questions}" class="offset-2 form-group mt-3">
+        <textarea th:value="${el.text}" class="size1"/>
+        <ul class="list-group mt-2">
+            <li th:each="ans : ${el.answers}" class="list-group-item">
+                <i th:class="${ans.correct}? 'fa fa-check text-success' : 'fa fa-times text-danger' "></i>
+                <th:block th:text="${ans.text}"></th:block>
+            </li>
+        </ul>
+    </div>
+</th:block>
+
