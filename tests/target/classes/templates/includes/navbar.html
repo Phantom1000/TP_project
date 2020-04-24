@@ -1,8 +1,10 @@
 <th:block th:fragment="navbar">
     <nav class="navbar navbar-dark bg-primary">
-        <a class="nav-link text-white" th:href="@{/}">Главная</a>
+        <a class="nav-link text-white" th:href="@{/}" onclick="yaCounter62247910.reachGoal('toMainPage'); return true;">Главная</a>
         <form th:action="@{/logout}" class="form-inline" method="post">
-            <button class="btn btn-light btn-sm" type="submit">Выйти</button>
+            <button class="btn btn-light btn-sm" type="submit"
+                    onclick="yaCounter62247910.reachGoal('toExit'); return true;">Выйти
+            </button>
         </form>
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">

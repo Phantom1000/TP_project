@@ -19,7 +19,8 @@
         </ul>
     </div>
     <div class="mt-5 text-center">
-        <a th:href="@{/profile/{id}(id=${id})}" class="btn btn-primary mb-2 result-button">Завершить обзор</a>
+        <a th:href="@{/profile/{id}(id=${id})}" class="btn btn-primary mb-2 result-button"
+           onclick="yaCounter62247910.reachGoal('completeAnalysis'); return true;">Завершить обзор</a>
     </div>
 </div>
 <div th:replace="includes/scripts :: scripts"/>
