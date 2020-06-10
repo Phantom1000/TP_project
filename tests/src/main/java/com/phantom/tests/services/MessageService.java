@@ -14,6 +14,10 @@ public class MessageService {
         this.messageRepo = messageRepo;
     }
 
+    public Message findById(Long id) {
+        return messageRepo.findById(id).orElseThrow();
+    }
+
     public void addMessage(String text, User user) {
         Message message = new Message(text, user);
         messageRepo.save(message);
@@ -21,6 +25,11 @@ public class MessageService {
 
     public Iterable<Message> findAll() {
         return messageRepo.findAll();
+    }
+
+    public void update(Message message, String text) {
+        message.setText(text);
+        messageRepo.save(message);
     }
 
     public void viewMessage(Message message) {

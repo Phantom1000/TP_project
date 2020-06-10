@@ -20,6 +20,14 @@
                 class="fa fa-plus"></i> Добавить тест</a>
     </div>
 
+    <div class="row mt-4">
+        <form method="post" th:action="@{/message/admin}" class="form-inline">
+            <label for="text">Сообщение для пользователей, успешно прошедших тест: </label>
+            <textarea class="mx-3 form-control" name="text" rows="4" cols="25" id="text" th:text="${message.text}" />
+            <button class="btn btn-success ml-2" type="submit">Сохранить</button>
+        </form>
+    </div>
+
     <table class="table table-bordered mt-2 col-sm-10">
         <th:block th:if="${show.equals('users')}">
             <thead>

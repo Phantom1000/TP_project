@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/message")
 public class MessageController {
     private final MessageService messageService;
+    private final Long ADMIN_MESSAGE = 1L;
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("")
@@ -55,6 +56,13 @@ public class MessageController {
         }
 
         return "messages";
+    }
+
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @PostMapping("/admin")
+    public String update(@RequestParam String text) {
+        messageService.update(messageService.findById(ADMIN_MESSAGE), text);
+        return "redirect:/";
     }
 
     public MessageController(MessageService messageService) {

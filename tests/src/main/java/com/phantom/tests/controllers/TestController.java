@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.phantom.tests.models.*;
+import com.phantom.tests.services.MessageService;
 import com.phantom.tests.services.TestService;
 
 import com.phantom.tests.services.UserService;
@@ -23,6 +24,8 @@ public class TestController {
 
     private final TestService testService;
     private final UserService userService;
+    private final MessageService messageService;
+    private final Long ADMIN_MESSAGE = 1L;
 
     @GetMapping("/")
     public String indexPosition(@AuthenticationPrincipal User user, @RequestParam(required = false) String show,
@@ -42,7 +45,7 @@ public class TestController {
                 }
                 model.addAttribute("show", "users");
             }
-
+            model.addAttribute("message", messageService.findById(ADMIN_MESSAGE));
             return "admin";
         }
         model.addAttribute("id", user.getId());
@@ -60,9 +63,10 @@ public class TestController {
         return "test";
     }
 
-    public TestController(TestService testService, UserService userService) {
+    public TestController(TestService testService, UserService userService, MessageService messageService) {
         this.testService = testService;
         this.userService = userService;
+        this.messageService = messageService;
     }
 
     @PostMapping("/record")
@@ -71,6 +75,9 @@ public class TestController {
         model.addAttribute("rating", (int) (res.getRating() * 100));
         model.addAttribute("result", res.getId());
         model.addAttribute("id", user.getId());
+        if ((int) (res.getRating() * 100) >= 80) {
+            messageService.addMessage(messageService.findById(ADMIN_MESSAGE).getText(), user);
+        }
         return "result";
     }
 
